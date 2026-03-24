@@ -1,0 +1,229 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 150 10% 5%;
+    --foreground: 30 10% 90%;
+    --border: 150 10% 15%;
+    --input: 150 10% 15%;
+    --ring: 40 60% 50%;
+    --primary: 40 60% 50%;
+    --primary-foreground: 150 10% 5%;
+    --secondary: 150 10% 10%;
+    --secondary-foreground: 30 10% 90%;
+    --destructive: 0 80% 50%;
+    --destructive-foreground: 30 10% 90%;
+    --muted: 150 10% 10%;
+    --muted-foreground: 150 10% 60%;
+    --accent: 40 60% 50%;
+    --accent-foreground: 150 10% 5%;
+    --card: 150 10% 7%;
+    --card-foreground: 30 10% 90%;
+    --popover: 150 10% 7%;
+    --popover-foreground: 30 10% 90%;
+    --radius: 0.5rem;
+
+    /* Group Colors RGB */
+    --green-rgb: 61, 97, 69;
+    --red-rgb: 155, 32, 32;
+    --purple-rgb: 112, 64, 160;
+    --yellow-rgb: 184, 150, 12;
+    --blue-rgb: 42, 109, 181;
+    --custom-rgb: 136, 136, 136;
+
+    /* New Global Design System */
+    --bg-primary: #08080a;
+    --bg-secondary: #0d0d0f;
+    --bg-tertiary: #0a0a0c;
+    --text-primary: #e8e4df;
+    --text-secondary: #a8b0c5;
+    --text-muted: #888888;
+    --accent-gold: #c4a850;
+    --border-gold: rgba(196,168,80,0.12);
+  }
+  .dark {
+    --background: 150 10% 5%;
+    --foreground: 30 10% 90%;
+    --border: 150 10% 15%;
+    --input: 150 10% 15%;
+    --ring: 40 60% 50%;
+    --primary: 40 60% 50%;
+    --primary-foreground: 150 10% 5%;
+    --secondary: 150 10% 10%;
+    --secondary-foreground: 30 10% 90%;
+    --destructive: 0 80% 50%;
+    --destructive-foreground: 30 10% 90%;
+    --muted: 150 10% 10%;
+    --muted-foreground: 150 10% 60%;
+    --accent: 40 60% 50%;
+    --accent-foreground: 150 10% 5%;
+    --card: 150 10% 7%;
+    --card-foreground: 30 10% 90%;
+    --popover: 150 10% 7%;
+    --popover-foreground: 30 10% 90%;
+    --radius: 0.5rem;
+  }
+
+  html, body, #root {
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  input, textarea, select {
+    @apply border border-[rgba(196,168,80,0.12)] focus:border-[#c4a850] focus:ring-1 focus:ring-[#c4a850] transition-colors bg-[#0d0d0f] text-[#e8e4df];
+  }
+
+  .category-card {
+    @apply bg-[#0d0d0f] border border-[rgba(196,168,80,0.12)];
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+}
+
+.grid-bg {
+  background-size: var(--grid-size) var(--grid-size);
+  background-image: linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+}
+
+/* Reveal Animations */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: transform, opacity;
+  animation: revealFallback 0.6s ease forwards;
+  animation-delay: 2s;
+}
+
+[data-animate].revealed {
+  opacity: 1;
+  transform: translateY(0);
+  animation: none;
+}
+
+@keyframes revealFallback {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Glow Pulse Animation */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 15px rgba(var(--card-rgb), 0.06); }
+  50% { box-shadow: 0 0 25px rgba(var(--card-rgb), 0.12); }
+}
+
+/* Card Swap Animation */
+@keyframes cardSwapIn {
+  0% { opacity: 0; transform: scale(0.97); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Cards Grid Layout */
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Category Card Base Styles */
+.category-card {
+  padding: 20px 24px;
+  border-radius: 12px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 3px solid rgb(var(--card-rgb));
+  backdrop-filter: blur(4px);
+  transition: transform 0.4s ease;
+  position: relative;
+  text-align: left;
+  cursor: pointer;
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Pseudo-element for optimized hover glow */
+.category-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  box-shadow: 0 0 30px rgba(var(--card-rgb), 0.2);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.category-card:hover {
+  transform: scale(1.05) !important;
+  animation-play-state: paused !important;
+  z-index: 10;
+}
+
+.category-card:hover::after {
+  opacity: 1;
+}
+
+/* Step Icon Optimizations */
+.step-icon {
+  position: relative;
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transition: transform 0.3s ease;
+}
+
+.step-icon::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(var(--step-color-rgb), 0.25);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.step-icon:hover {
+  transform: scale(1.08);
+}
+
+.step-icon:hover::after {
+  opacity: 1;
+}
+
+/* Agensia Logo Filters */
+.filter-white {
+  filter: brightness(0) invert(1);
+}
+.filter-gold {
+  filter: brightness(0) saturate(100%) invert(73%) sepia(31%) saturate(834%) hue-rotate(7deg) brightness(93%) contrast(88%) drop-shadow(0 0 8px rgba(196,168,80,0.5));
+}
