@@ -1,0 +1,13 @@
+services:
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+      - "8080:8080"
+      - "8090:8090"
+    volumes:
+      - pb_data:/app/pocketbase/pb_data
+    restart: unless-stopped
+
+volumes:
+  pb_data:

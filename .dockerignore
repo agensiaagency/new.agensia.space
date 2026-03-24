@@ -1,0 +1,5 @@
+node_modules
+dist
+apps/pocketbase/pb_data
+.git
+.DS_Store
